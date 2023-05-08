@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<head>
+    <style>
+         
+
+        body {
+            text-align: center;
+            margin: 0;
+            background: #f8f4ee;
+        }
+
+        #title {
+            padding-left: 10px;
+        }
+
+        .result-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 0px 7px;
+        }
+
+        .overlay-container-thumbs {
+            max-width: 300px;
+            max-height: 300px;
+            position: relative;
+
+        }
+
+        .overlay-container-thumbs img {
+            max-width: 300px;
+            max-height: 300px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+        .overlay-container-thumbs h5 {
+            position: absolute;
+            left: 50%;
+            bottom: 0%;
+            margin: unset;
+            transform: translateX(-50%);
+            color: #fff;
+            background-color: #824b00;
+            width: 100%;
+            padding: 2px 0px;
+            font-weight: normal;
+        }
+
+        .custom-btn {
+            color: #fff;
+            background: linear-gradient(to bottom, #cd9d63 0%, #ad6c14 100%);
+            font-size: 15px;
+            font-weight: 500;
+            float: right;
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            margin: 0;
+            cursor: pointer;
+            /* -webkit-appearance: none; */
+            outline: none;
+        }
+
+        @media only screen and (max-width: 767px) {
+            .overlay-container-thumbs {
+                margin-bottom: 30px;
+            }
+
+            .overlay-container-thumbs {
+                max-width: 100%;
+            }
+
+            .overlay-container-thumbs img {
+                max-width: 100%;
+            }
+        }
+
+        #nav {
+            font-size: 15px;
+            font-weight: 500;
+            max-width: 600px;
+            border-bottom: 1px #ffdbaa solid;
+            margin: 0 auto;
+            padding: 15px 0;
+            background: #fff;
+            margin-top: 12px;
+            border-radius: 7px;
+            box-shadow: 0 4px 4px 0 rgba(173, 108, 21, 0.37) !important;
+        }
+
+        #nav a {
+            color: #824b00;
+            text-decoration: none;
+            padding: 8px 10px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        #nav a:hover {
+            border-bottom: 2px solid #824b00;
+            background: #f8f4ee;
+            border-radius: 5px;
+        }
+
+        #nav a:last-of-type {
+            margin-right: 0 !important;
+        }
+
+        #content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        #logo {
+            border: none;
+            width: 60%;
+        }
+
+        #error {
+            color: #bf2b2b;
+            background-color: #feecec;
+            font-size: 15px;
+            font-weight: 400;
+            text-align: center;
+            width: 93%;
+            border: 1px #f1c1c1 solid;
+            padding: 3.333333333333333%;
+            display: none;
+            border-radius: 7px;
+            margin: 20px auto;
+        }
+
+        #error a {
+            color: #bf2b2b;
+            font-weight: 500;
+        }
+
+        #error a:hover,
+        #error a:active {
+            text-decoration: none;
+        }
+
+        #error p:first-of-type {
+            margin-top: 0;
+        }
+
+        #error p:last-of-type {
+            margin-bottom: 0;
+        }
+
+        #converter {
+            background-color: #fff;
+            width: 93.33333333333333%;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            padding: 0 3.333333333333333% 20px;
+            border: 1px solid #e4dacd;
+            border-radius: 7px;
+            box-shadow: 0 4px 4px 0 rgba(173, 108, 21, 0.37) !important;
+        }
+
+        #title,
+        #tips {
+            color: #824b00;
+            font-size: 15px;
+            font-weight: 500;
+            text-align: left;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        #tips {
+            height: 44px;
+            line-height: 44px;
+        }
+
+        #title {
+            height: 25px;
+            line-height: 20px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ffe1bc;
+        }
+
+        #converter form {
+            background-color: #f8f4ee;
+            width: 99.64285714285714%;
+            height: 42px;
+            border: 1px #824b00 solid;
+            border-radius: 3px;
+        }
+
+        #converter form #input {
+            font-size: 15px;
+            color: #824b00;
+            background-color: transparent;
+            font-weight: 400;
+            line-height: 42px;
+            float: left;
+            width: 78%;
+            height: 42px;
+            border: none;
+            margin: 0 0.5376344086021505% 0 1.075268817204301%;
+            padding: 0;
+            outline: none;
+        }
+
+        #converter form #submit {
+            color: #fff;
+            background: linear-gradient(to bottom, #cd9d63 0%, #ad6c14 100%);
+            font-size: 15px;
+            font-weight: 500;
+            float: right;
+            width: 20%;
+            height: 43px;
+            border: none;
+            border-radius: 3px;
+            margin: 0;
+            cursor: pointer;
+            /* -webkit-appearance: none; */
+            outline: none;
+        }
+
+        #converter form #submit:hover,
+        .custom-btn:hover {
+            background: linear-gradient(to bottom, #ad6c14 0%, #cd9d63 100%);
+        }
+
+        #data {
+            background: #fff;
+            border: 1px solid #e4dacd;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 11px;
+            margin: 20px auto;
+            padding: 1rem;
+            display: none;
+            box-shadow: 0 4px 4px 0 rgba(173, 108, 21, 0.37) !important;
+        }
+
+        #data #progress {
+            color: #824b00;
+            font-size: 15px;
+            font-weight: 400;
+            background-color: #fff;
+            line-height: 86px;
+            width: 99.64285714285714%;
+            height: 86px;
+            border: 1px #824b00 solid;
+            border-radius: 3px;
+            display: none;
+            position: relative;
+        }
+
+        #comp {
+            background: #1b6dc1;
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+        }
+
+        #pro,
+        #pro_done {
+            position: relative;
+            font-weight: 700;
+        }
+
+        #pro_bg {
+            background: #fff;
+            padding: 5px 15px;
+            border-radius: 10px;
+            position: relative;
+            font-weight: 700;
+        }
+
+        #data #buttons {
+            display: none;
+        }
+
+        #data #buttons a {
+            color: #fff;
+            background: linear-gradient(to bottom, #cd9d63 0%, #ad6c14 100%);
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 20px;
+            text-decoration: none;
+            height: auto;
+            border-radius: 3px;
+            margin: 4px 0;
+            padding: 5px 25px;
+            display: inline-block;
+            cursor: pointer;
+            vertical-align: middle;
+        }
+
+        #data #buttons a:hover {
+            background: linear-gradient(to bottom, #ad6c14 0%, #cd9d63 100%);
+        }
+
+        #data #buttons #dropbox {
+            display: none;
+        }
+
+        #formats {
+            background-color: #0087cf;
+            width: 100%;
+            height: 36px;
+            border-bottom-right-radius: 3px;
+            border-bottom-left-radius: 3px;
+        }
+
+        #formats a {
+            color: #fff;
+            font-size: 15px;
+            font-style: italic;
+            font-weight: 700;
+            line-height: 36px;
+            text-decoration: none;
+            float: left;
+            height: 36px;
+            border-right: 1px #2394d0 solid;
+            padding: 0 3.333333333333333%;
+            display: block;
+        }
+
+        #formats a:hover,
+        #formats a:active {
+            background-color: #007cbe !important;
+        }
+
+        #formats a:first-of-type {
+            background-color: #007cbe;
+            border-bottom-left-radius: 3px;
+        }
+
+        #ad {
+            width: 100%;
+            margin: 40px auto;
+        }
+
+        #ad iframe {
+            width: 78%;
+            height: 60px;
+            border: none;
+        }
+
+        #separator {
+            background-color: #ffdbaa;
+            width: 6.666666666666667%;
+            height: 5px;
+            margin: 40px auto;
+        }
+
+        #article {
+            color: #000;
+            font-size: 14px;
+            font-weight: 400;
+            text-align: justify;
+            background: #fff;
+            border: 1px solid #e4dacd;
+            border-radius: 7px;
+            padding: 35px 25px;
+            box-shadow: 0 4px 4px 0 rgba(173, 108, 21, 0.37) !important;
+        }
+
+        #article h1 {
+            color: #824b00;
+            font-size: 30px;
+            font-weight: 500;
+            text-align: center;
+            margin: 0 0 20px;
+        }
+
+        #article p {
+            line-height: 25px;
+        }
+
+        #article p:first-of-type {
+            margin-top: 0;
+        }
+
+        #article p:last-of-type {
+            margin-bottom: 0;
+        }
+
+        #article a:link,
+        #article a:visited {
+            color: #824b00;
+            font-weight: 700;
+        }
+
+        #article a:hover,
+        #article a:active {
+            text-decoration: none;
+        }
+
+        #article a::after {
+            content: " \27A5";
+        }
+
+        #article h2 {
+            color: #824b00;
+            font-size: 20px;
+            font-weight: 600;
+            margin: 20px auto 10px;
+        }
+
+        #article ol li {
+            margin: 10px auto;
+        }
+
+        #article ol {
+            line-height: 20px;
+            list-style-type: decimal;
+        }
+
+        #article ol li ul li {
+            list-style-type: square;
+        }
+
+        #article ol p {
+            margin: 5px auto;
+        }
+
+        #footer {
+            color: #7b7c7b;
+            font-size: 13px;
+            font-weight: 400;
+            max-width: 600px;
+            margin: 10px auto;
+            padding: 5px 0;
+        }
+
+        #footer a:link,
+        #footer a:visited {
+            color: #824b00;
+            text-decoration: none;
+            border: 1px solid;
+            padding: 10px;
+            width: 29%;
+            display: inline-block;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            font-weight: 500;
+        }
+
+        #footer a:hover {
+            background: #824b00;
+            color: #fff;
+        }
+
+        #details {
+            display: block;
+            width: 70%;
+        }
+
+        #image {
+            padding-right: 22px;
+            width: 160px;
+        }
+
+        #image img {
+            border: 3px solid #824b00;
+            border-radius: 5px;
+            width: 150px;
+            height: 90px;
+        }
+
+        .data {
+            display: flex !important;
+        }
+
+        #size,
+        #size1,
+        #size2,
+        #size3,
+        #size4,
+        #size5,
+        #f,
+        #f1,
+        #f2,
+        #f3,
+        #f4,
+        #f5,
+        #t,
+        .vs {
+            color: #824b00;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        #f {
+            min-width: 85px;
+            width: 30%;
+        }
+
+        #t {
+            border: 1px solid #ffe1bc;
+            padding: 5px 0;
+            display: block;
+            border-radius: 7px;
+            margin-top: 4px;
+        }
+
+        #table,
+        #table2 {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+            height: 86px;
+            margin-bottom: 15px;
+        }
+
+        #table td,
+        #table2 td {
+            border: 1px solid #ffe1bc;
+        }
+
+        .f2,
+        .vf {
+            font-size: 20px;
+            display: block;
+        }
+
+        .f3 {
+            display: block;
+        }
+
+        .f3,
+        .f31,
+        .f32,
+        .f33,
+        .f34,
+        .f35,
+        .vq {
+            font-size: 11px;
+            color: green;
+            font-weight: 500;
+        }
+
+        .dlbt {
+            float: left;
+            padding: 4px 0;
+            margin-left: -6px;
+            margin-right: 15px;
+            font-size: 30px !important;
+        }
+
+        #size {
+            display: block;
+            font-size: 11px;
+            text-align: right;
+            color: #ff0;
+        }
+
+        #size1,
+        #size2,
+        #size3,
+        #size4,
+        #size5 {
+            font-size: 11px;
+            color: #824b00;
+            vertical-align: middle;
+        }
+
+        #play,
+        #pause {
+            width: 20px;
+            padding: 15px 10px !important;
+        }
+
+        #moremp3,
+        #hidemp3 {
+            border: unset !important;
+            border-radius: 0 0 12px 12px;
+            background: linear-gradient(to bottom, #ffe8cc 0%, #ffc474 100%);
+            color: #824b00;
+            font-size: 10px;
+            font-weight: 500;
+            padding: 7px 0;
+            cursor: pointer;
+            text-shadow: 1px 0 0 #fff, -1px 0 0 #fff, 0 1px 0 #fff, 0 -1px 0 #fff,
+                1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+        }
+
+        .hid,
+        #hidemp3,
+        #mp4data,
+        #audio {
+            display: none;
+        }
+
+        #msg {
+            padding: 10px;
+            border: 1px solid #ad6c15;
+            border-radius: 5px;
+            display: block;
+            background: #ad6c152e;
+            color: #ad6c15;
+            font-weight: 500;
+            font-size: 13px;
+        }
+
+        .vq i,
+        #f i,
+        #msg i {
+            color: red;
+            font-size: 13px;
+            vertical-align: text-bottom;
+        }
+
+        .clear {
+            clear: both;
+        }
+
+        @keyframes slide {
+            from {
+                background-position-x: 0;
+            }
+
+            to {
+                background-position-x: 113px;
+            }
+        }
+
+        #comp {
+            box-shadow: 0 10px 13px -6px #2c3e50;
+            background-color: #1b6dc1c9;
+            background-image: repeating-linear-gradient(45deg,
+                    transparent,
+                    transparent 40px,
+                    #1b6dc1 40px,
+                    #1b6dc1 80px);
+            animation: slide 2s linear infinite;
+            will-change: background-position;
+            background-size: 339px;
+            transition: width 8s ease;
+        }
+
+        @media only screen and (max-width: 600px) {
+            #logo {
+                width: 75%;
+            }
+
+            #error {
+                width: 89%;
+                margin: 0 auto;
+            }
+
+            #converter {
+                width: 89.33333333333333%;
+                margin: 0 auto;
+            }
+
+            #converter form #input {
+                font-size: 16px;
+                width: 73.46594982078853%;
+            }
+
+            #converter form #submit {
+                width: 24.38351254480287%;
+            }
+
+            #converter #buttons a {
+                padding: 0 3.333333333333333%;
+            }
+
+            #formats {
+                width: 96%;
+                margin: 0 auto;
+            }
+
+            #formats a {
+                padding: 0 5%;
+            }
+
+            #ad iframe {
+                width: 96%;
+                height: 60px;
+                margin: 0 auto;
+            }
+
+            #image {
+                padding-right: 0;
+                width: 100%;
+            }
+
+            #progress {
+                width: 100%;
+            }
+
+            #data {
+                width: 89.33333333333333%;
+                padding: 20px 3.333333333333333%;
+            }
+
+            #details {
+                display: block;
+                width: 100%;
+            }
+
+            #title {
+                margin: 20px 0 15px;
+            }
+
+            #article {
+                width: 89.33333333333333%;
+                padding: 20px 3.333333333333333%;
+                margin: 20px auto;
+            }
+
+            .data {
+                display: block !important;
+            }
+
+            #footer a:link,
+            #footer a:visited {
+                width: 42%;
+            }
+            .ld{
+                margin-right: 5px;
+            }
+        }
+    </style>
+    <title>Convert YouTube to MP3 (up to 320kbps) at YTMP3.CC | YTMP3</title>
+    <base>
+    <meta name="keywords" content="ytmp3.cc,youtube,mp3,converter,downloader,ytmp3,free converter tool,online">
+    <meta name="description"
+        content="YTMP3.CC is a best online youtube to mp3 (audio) converter tool, Convert youtube to MP3 up to 320kbps high quality and MP4 and Download it on ytmp3.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link href="indexd8cc.html?l=en" rel="canonical">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="indexd8cc.html?l=en">
+    <meta property="og:title" content="Convert YouTube to MP3 (up to 320kbps) at YTMP3.CC | YTMP3">
+    <meta property="og:description"
+        content="YTMP3.CC is a best online youtube to mp3 (audio) converter tool, Convert youtube to MP3 up to 320kbps high quality and MP4 and Download it on ytmp3.">
+    <meta property="og:image" content="../img/yt2mp3.png">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="indexd8cc.html?l=en">
+    <meta property="twitter:title" content="Convert YouTube to MP3 (up to 320kbps) at YTMP3.CC | YTMP3">
+    <meta property="twitter:description"
+        content="YTMP3.CC is a best online youtube to mp3 (audio) converter tool, Convert youtube to MP3 up to 320kbps high quality and MP4 and Download it on ytmp3.">
+    <me ta property="twitter:image" content="../img/yt2mp3.png">
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,500&amp;display=swap">
+</head>
+
+<body>
+    <div id="nav">
+        <a href="">Home</a><a href="">FAQ</a><a href="">Contact
+            Us</a><a id="theme" onclick="themsload('d')" data-t="d" rel="nofollow">[Dark] Theme</a>
+    </div>
+    <div id="content">
+        <link rel="stylesheet" type="text/css"
+            href="https://cdn.jsdelivr.net/gh/loadingio/loading.css@v2.0.0/dist/loading.css" />
+        <link rel="stylesheet" type="text/css"
+            href="https://cdn.jsdelivr.net/gh/loadingio/ldbutton@v1.0.1/dist/ldbtn.min.css" />
+        <div style="display: block;width: 100%;height: 65px;padding: 60px 0;"><img id="logo"
+                src="https://yt2mp3.info/img/l.png" alt="youtube to mp3 converter site logo" width="100%" height="100%">
+        </div>
+        <div id="tool">
+            <div id="converter">
+                <div id="tips">Please insert a valid youtube URL</div>
+                <form method="GET" id="form_convert">
+                    <input id="input" type="text" name="video" placeholder="Enter search or youtube URL"
+                        autocomplete="off" value="" spellcheck="false" autofocus required>
+                    <button id="submit" type="submit">START</button>
+                </form>
+            </div>
+        </div>
+        <div id="search-result" class="result" style="width:600px; display: none;">
+            <div class="result-content">
+                <h1 id="title"></h1>
+                <div class="overlay-container-thumbs">
+                    <div class="th" role="button" aria-label="Thumbnail" id="" src="">
+                        <a href="" id="click_on_thumb">
+                            <img aria-hidden=true id="thumbnail" />
+                        </a>
+
+                        <h5 id="duration"></h5>
+                    </div>
+                </div>
+                <div>
+                    <a class="button custom-btn" id="mp3" href="">Download mp3</a>
+                </div>
+                <div> <a class="button custom-btn" id="mp4">Download mp4</a></div>
+            </div>
+
+            <!-- <div class="loader" id="loader">
+                <div class="loading">
+                </div>
+            </div> -->
+
+            <!-- <video id="my-video" controls width="400"></video> -->
+        </div>
+        <!-- <div id="search-result" style="margin: 20px auto;"></div> -->
+        <div id="separator"></div>
+        <div id="article">
+            <h1>What is a YTMP3.cc converter</h1>
+            <p>Ytmp3.cc is a simple third party tool designed to convert YouTube to MP3 (audio) or MP4 (video) and
+                people also call it YouTube downloader, This site is highly used for youtube mp3 or mp4 because YouTube
+                does not provide its users with the facility to download MP3 and video files on their website, this is
+                why people use these third party online tools to extract videos or mp3 from YouTube.</p>
+            <p><strong>Yt2mp3.info</strong> works similar to <strong>ytmp3.cc</strong> so you can use our tool to
+                convert <a href="../indexd8cc.html?l=en"><strong>YouTube to MP3</strong></a></p>
+            <p>We have included and supported all popular quality variant like: <strong>32Kbps, 64Kbps, 128Kbps,
+                    192Kbps, 256kbps and 320Kbps</strong> to make our converter tool better than ytmp3.</p>
+            <img src="../../i0.wp.com/yt2mp3.info/img/ytmp3cc.jpg" alt="image of ytmp3.cc youtube to mp3 converter"
+                width="100%" height="100%">
+            <h2>How to Convert YouTube to mp3 using ytmp3.cc</h2>
+            <p>To convert from <strong>YTmp3.cc</strong>, you have to follow only 3 steps which are given below.</p>
+            <ol>
+                <li>
+                    <p>Open <a href="https://www.youtube.com/" rel="noreferrer nofollow"
+                            target="_blank"><strong>YouTube.com</strong></a> and copy the link to your <strong>favorite
+                            video</strong> from youtube.</p>
+                    <img src="../../i0.wp.com/yt2mp3.info/img/1.jpg" alt="image of ytmp3.cc" width="100%" height="100%">
+                </li>
+                <li>
+                    <p>Paste the copied <strong>YouTube link</strong> inside the <strong>convert box</strong>, then
+                        simply press the <strong>Convert</strong> button.</p>
+                    <img src="../../i0.wp.com/yt2mp3.info/img/2.jpg" alt="image of ytmp3.cc" width="100%" height="100%">
+                </li>
+                <li>
+                    <p>Click <strong>Download</strong>, When the convert is complete, a Download Status button will
+                        display.</p>
+                    <img src="../../i0.wp.com/yt2mp3.info/img/3.jpg" alt="image of ytmp3.cc" width="100%" height="100%">
+                </li>
+            </ol>
+            <h2>About length limits and files quality</h2>
+            <p><strong>Length Limitation:</strong> ytmp3cc limit for converting video length is up to 1 hour at most.
+                This length limit applies to both files mp3 and mp4.</p>
+            <p><strong>Quality of Mp3:</strong> ytmp3.cc has clearly mentioned in its site that the videos are always
+                converted in the highest available quality, This means that you are going to get an MP3 file between
+                128kbps to 150kbps.</p>
+            <p><strong>Video Resolution:</strong> Nowhere in <strong>YTmp3.cc</strong> is it explicitly mentioned what
+                the quality and resolution of the video will be So we downloaded some videos ourselves and checked them.
+                Most of the video Resolution we have got 320p, If you are in good luck, you can get HD 720p video
+                resolution.</p>
+            <h2>Is ytmp3.cc safe and free?</h2>
+            <p>YES, Ytmp3.cc is free and safe, Many of my friends have been using it for years and never had any issues
+                till date. Any technical service related issues you can contact them directly using this form - <a
+                    href="" rel="nofollow noreferrer">Contact</a>.</p>
+        </div>
+    </div>
+    <div id="footer">
+        <a href="">Copyright Claims</a> <a href="">Privacy Policy</a>
+        <a href="">Terms of use</a> <a href="" target="_blank">320ytmp3</a>
+        <a href="" target="_blank">New YT to MP3</a> <a href="" target="_blank">yt1s - youtube downloader</a>
+    </div>
+    <script type="text/javascript">
+        let isDisabled = false;
+        var pt = document.getElementById("form_convert");
+        pt.addEventListener('paste', function (e) { handlePaste(); });
+        pt.addEventListener("submit", function (e) {
+            handlePaste();
+            e.preventDefault();
+        });
+        function handlePaste() {
+            setTimeout(function () {
+                var a = document.querySelector("#form_convert input"),
+                    n = a.value.split(/(vi\/|v%3D|v=|\/v\/|youtu\.be\/|\/embed\/|\/shorts\/)/);
+                n[2] && n[2].length > 10 ?
+                    (a.value = "https://www.youtube.com/watch?v=" + n[2].split(/[^0-9a-z_\-]/i)[0], search(a.value, "url")) : search(encodeURIComponent(a.value), "q");
+                //console.log(a.value)
+            }, 400);
+        }
+        function search(p, q) {
+            if (isDisabled) {
+                return;
+            }
+            //sectionFrameDoc = document.getElementById('section-frame').contentWindow.document;
+
+            isDisabled = true;
+            setLoading("submit")
+            spinner()
+            var requestedId;
+            var dataStatus;
+            var title;
+            let thumbnailURL;
+            var d = new Date();
+            var n = d.getHours();
+            let uniqueURI = `http://localhost:4001/make-video?${q}=${p}`;
+            // document.getElementById("search-result").innerHTML = '<iframe  id="hphp" style="border: none;" src="' + uniqueURI + '" width="100%" height="330"></iframe>';
+            console.log({ uniqueURI })
+
+            fetch(uniqueURI)
+                .then(response => response.json())
+                .then(data => {
+                    // store the data in a variable
+                    //let  = data;
+
+                    requestedId = data.request_id;
+                    console.log(requestedId);
+                })
+
+
+            const intervalTimer = setInterval(() => {
+                fetch(`http://localhost:4001/get-status?id=${requestedId}`)
+                    .then(response => response.json())
+                    .then(statusResult => {
+
+                        // store the data in a variable
+                        dataStatus = statusResult.data;
+                        if (dataStatus !== null) {
+                            clearInterval(intervalTimer)
+                            //store title in local variable
+                            title = dataStatus.title;
+                            //store thumbnail in local variable
+                            thumbnailURL = dataStatus.thumbnail;;
+                            const path = dataStatus.mp4.split('/').pop();
+                            const audioPath = dataStatus.mp3.split('/').pop();
+                            //full path of video file
+                            let fullVideoPath = `http://localhost:4001/static/uploads/mp4/${path}`;
+                            //ful path of audio file
+                            let fullAudioPath = `http://localhost:4001/static/uploads/mp3/${audioPath}`;
+                            //duration
+                            let duration = dataStatus.duration;
+                            setResponse(title, thumbnailURL, fullAudioPath, fullVideoPath, duration);
+                            isDisabled = false;
+                            setUnloading("submit");
+                            showSection();
+
+                        }
+                    })
+            }, 3000);
+            return false;
+        }
+        function setResponse(title, thumb_url, mp3_url, mp4_url, duration) {
+            const thumb = document.getElementById('thumbnail');
+            thumb.src = thumb_url;
+            document.getElementById("mp4").href = mp4_url;
+            document.getElementById("mp3").href = mp3_url;
+            const setDuration = document.getElementById('duration');
+            setDuration.innerHTML = duration;
+            const titleShow = document.getElementById('title');
+            titleShow.innerHTML = title;
+        }
+        function showSection() {
+            document.getElementById("search-result").style.display = 'block';
+        }
+        function setLoading(id) {
+            let elem = document.getElementById(id);
+            elem.innerHTML = '<div class="ld ld-spinner ld-spin" style="margin-right:5px;"></div>' + elem.innerHTML;
+            elem.disabled = true;
+        }
+        function setUnloading(id) {
+            let elem = document.getElementById(id);
+            elem.innerHTML = elem.innerHTML.replace('<div class="ld ld-spinner ld-spin" style="margin-right:5px;"></div>', '');
+
+            elem.disabled = false;
+        }
+        function spinner() {
+            // const btn = document.getElementById('submit')
+            // const div = document.getElementById("loader").style.display = "block";
+            // btn.innerHTML=div;
+        }
+        // function themsload(t)
+        //     var xhttp = new XMLHttpRequest();
+        //     xhttp.onreadystatechange = function () {
+        //         if (this.readyState == 4 && this.status == 200) {
+        //             location.reload();
+        //         }
+        //     };
+        //     xhttp.open("../index.html", "../t.html", true);
+        //     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        //     xhttp.send("t=" + t);
+        // }
+        // themsload()
+        // setTimeout(function () { location.reload(); }, 18000 * 1000);
+    </script>
+    <!-- <script type="text/javascript">var _Hasync = _Hasync || [];
+        _Hasync.push(['Histats.start', '1,1181827,4,0,0,0,00010000']);
+        _Hasync.push(['Histats.fasi', '1']);
+        _Hasync.push(['Histats.track_hits', '']);
+        (function () {
+            var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+            hs.src = ('../../s10.histats.com/js15_as.js');
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+        })();</script> -->
+</body>
+
+
+</html>
